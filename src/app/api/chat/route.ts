@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
-import { supabase } from "../../../../supabase"
+import { supabase } from "../../../supabase"
 
-export async function GET(
-    req: NextRequest,
-    { params }: { params: { chat_id: string } }
-  ): Promise<NextResponse> {  try {
-    const chat_id = params.chat_id
+export async function GET(request: NextRequest): Promise<NextResponse> {
+    const chat_id =request.nextUrl.searchParams.get("chat_id")
+    console.log(chat_id,'chat_id')
+    try {
     if (!chat_id) {
       return NextResponse.json({ error: "Chat ID is required" }, { status: 400 })
     }
