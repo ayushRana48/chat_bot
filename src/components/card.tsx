@@ -46,7 +46,7 @@ export function CardFooter({ children, className, ...props }: React.HTMLAttribut
 
 export function CardTitle({ children, className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={`text-xl font-semibold ${className} text-black`} {...props}>
+    <h3 className={`text-xl font-semibold ${className} text-blue-900`} {...props}>
       {children}
     </h3>
   )

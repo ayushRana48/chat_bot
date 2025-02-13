@@ -14,12 +14,11 @@ export default function ChatBot() {
   const chatId = useParams().chat_id
 
   useEffect(() => {
-    if (chatId) {
+    if (chatId && typeof chatId === "string") {
       console.log("chatId", chatId)
-      // @ts-ignore
       setChatId(chatId)
     }
-  }, [chatId])
+  }, [chatId, setChatId])
 
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +37,7 @@ export default function ChatBot() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <Card className="w-full max-w-2xl h-[600px] flex flex-col">
         <CardHeader>
-          <CardTitle>AI Chat Bot</CardTitle>
+          <CardTitle>Jarvis from Collectwise</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow overflow-y-auto space-y-4">
           {!chatStarted && <div className="text-center text-gray-500 mt-8">Start chatting with the AI bot!</div>}
@@ -51,7 +50,7 @@ export default function ChatBot() {
               >
                 <div className="flex items-center space-x-2 mb-1">
                   {message.role === "User" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
-                  <span className="font-semibold">{message.role === "User" ? "You" : "Bot"}</span>
+                  <span className="font-semibold">{message.role === "User" ? "You" : "Jarvis"}</span>
                 </div>
                 <p>{message.content}</p>
               </div>

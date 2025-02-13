@@ -27,6 +27,6 @@ export async function GET(req: Request, { params }: { params: { chat_id: string 
 
     return NextResponse.json({ chat, messages })
   } catch (error) {
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json({ error: "Internal Server Error", errorMessage: error }, { status: 500 })
   }
 }

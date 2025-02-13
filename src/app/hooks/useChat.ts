@@ -16,11 +16,12 @@ export function useChat() {
   }
 
 
+
   const fetchChat = async () => {
     const res = await fetch(`/api/chat/${chatId}`)
     const data = await res.json()
     console.log("data", data)
-    const mappedData = data.messages.map((message: any) => ({ id: message.id, role: message.role, content: message.content }))
+    const mappedData = data.messages.map((message: Message) => ({ id: message.id, role: message.role, content: message.content }))
     console.log("mappedData", mappedData)
     setMessages(mappedData)
   }

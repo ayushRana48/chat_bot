@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     }
 
     // Check if chat exists
-    let { data: chat, error: chatError } = await supabase
+    const { data: chat, error: chatError } = await supabase
       .from("chat")
       .select("*")
       .eq("chat_id", username)
