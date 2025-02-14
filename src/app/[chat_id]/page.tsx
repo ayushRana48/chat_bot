@@ -52,7 +52,7 @@ export default function ChatBot() {
                   {message.role === "User" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
                   <span className="font-semibold">{message.role === "User" ? "You" : "Jarvis"}</span>
                 </div>
-                <p>{message.content}</p>
+                <p className="break-words">{message.content}</p>
               </div>
             </div>
           ))}
