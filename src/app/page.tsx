@@ -13,6 +13,7 @@ export default function MyComponent() {
 
   const goToChat = async () => {
     if (!username.trim()) return;
+    
 
     try {
       setLoading(true)

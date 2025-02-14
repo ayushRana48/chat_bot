@@ -32,6 +32,7 @@ export function useChat() {
       }))
       setMessages(mappedData)
     } catch (err) {
+      console.error("Error fetching chat:", err)
       setMessages(prev => [
         ...prev,
         {

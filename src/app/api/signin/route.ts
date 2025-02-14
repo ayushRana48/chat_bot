@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       }
 
       // Add initial bot message
-      const { data: message, error: messageError } = await supabase.from("message").insert([
+      const { error: messageError } = await supabase.from("message").insert([
         {
           chat_id: username,
           content: `Hi ${username}! I'm Jarvis from Collectwise. Our records show that you currently owe $2400. Are you able to resolve this debt today?`,
