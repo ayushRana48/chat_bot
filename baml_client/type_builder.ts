@@ -26,7 +26,7 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "IntentClassification","Plan",
+            "IntentClassification",
           ]),
           enums: new Set([
             

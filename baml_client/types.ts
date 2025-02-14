@@ -37,14 +37,5 @@ export function get_checks<CheckName extends string>(checks: Record<CheckName, C
 }
 export interface IntentClassification {
   reply: string
-  plan?: Plan | null
-  action: string
-  
-}
-
-export interface Plan {
-  time_period: string
-  payment_per: string
-  time_amount: string
   
 }

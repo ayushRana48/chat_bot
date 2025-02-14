@@ -33,14 +33,12 @@ export async function POST(req: Request) {
       const { data: message, error: messageError } = await supabase.from("message").insert([
         {
           chat_id: username,
-          content: "Hello! Our records show that you currently owe $2400. Are you able to resolve this debt today?",
+          content: `Hi ${username}! I'm Jarvis from Collectwise. Our records show that you currently owe $2400. Are you able to resolve this debt today?`,
           role: "Bot",
-          
+
         },
       ]).select()
-
-      console.log("message", message)
-
+                                
       if (messageError) {
         console.log("messageError", messageError)
         return NextResponse.json({ error: "Failed to insert initial bot message", details: messageError.message }, { status: 500 })
@@ -49,7 +47,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "New chat session created", chat_id: username })
     } else {
       // Fetch last known payment plan
-     
+
 
       // Customize return message based on last interaction
       const welcomeBackMessage = "Welcome back! How can I assist you today?"

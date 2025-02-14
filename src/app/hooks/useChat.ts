@@ -18,18 +18,42 @@ export function useChat() {
 
 
   const fetchChat = async () => {
-    const res = await fetch(`/api/chat?chat_id=${chatId}`);
-    const data = await res.json()
-    console.log("data", data)
-    const mappedData = data.messages.map((message: Message) => ({ id: message.id, role: message.role, content: message.content }))
-    console.log("mappedData", mappedData)
-    setMessages(mappedData)
+    setIsLoading(true)
+    try {
+      const res = await fetch(`/api/chat?chat_id=${chatId}`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch chat: ${res.status} ${res.statusText}`)
+      }
+      const data = await res.json()
+      const mappedData = data.messages.map((message: Message) => ({
+        id: message.id,
+        role: message.role,
+        content: message.content
+      }))
+      setMessages(mappedData)
+    } catch (err) {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          role: "Bot",
+          content: "There's been an error fetching your chat history. Please refresh the page."
+        }
+      ])
+    } finally {
+      setIsLoading(false)
+    }
   }
 
 
+
   useEffect(() => {
-    fetchChat()
+    if (chatId) {
+      fetchChat()
+    }
   }, [chatId])
+
+
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,19 +73,33 @@ export function useChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_message: input, chat_id: chatId }),
       })
+
+      if (!res.ok) {
+        throw new Error(`Failed to send message: ${res.status} ${res.statusText}`)
+      }
+
       const data = await res.json()
       console.log("data", data)
-      
+
+      if (!data.reply) {
+        throw new Error("No response received from the bot")
+      }
 
       const botMessage: Message = { id: Date.now().toString(), role: "Bot", content: data.reply }
       setMessages((prev) => [...prev, botMessage])
-      console.log(messages)
     } catch (error) {
       console.error("Chat error:", error)
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        role: "Bot",
+        content: "There's been an error processing your message. Please refresh the page."
+      }
+      setMessages((prev) => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
     }
   }
+
 
   return { messages, input, handleInputChange, handleSubmit, isLoading, setChatId }
 }

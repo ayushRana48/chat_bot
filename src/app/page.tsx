@@ -8,18 +8,33 @@ import { Button } from "../components/button"
 export default function MyComponent() {
   const router = useRouter()
   const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const goToChat = async () => {
-    console.log("onSubmit", username) // Debugging: Ensure username is correct
-    const response = await fetch("/api/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: username }),
-    })
-    console.log("response", response)
-    if (!username) return // Prevent navigation if username is empty
-    router.push(`/${username}`) // Navigate to /username (which maps to app/[chat_id]/page.tsx)
+    if (!username.trim()) return;
 
+    try {
+      setLoading(true)
+      setError("") // clear any previous error
+      const trimmedUsername = username.trim().toLowerCase();
+      const response = await fetch("/api/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: trimmedUsername }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Sign in failed");
+      }
+      router.push(`/${trimmedUsername}`);
+    } catch (error) {
+      console.error("Error during sign in:", error)
+      setError("An error occurred. Please refresh the page.");
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -27,10 +42,26 @@ export default function MyComponent() {
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold text-center text-gray-800">Welcome</h1>
         <p className="text-center text-gray-600">Enter your username to get started</p>
-          <Input type="text" placeholder="Username" className="w-full" value={username} onChange={(e) => setUsername(e.target.value)} />
-          <Button onClick={goToChat} className="w-full">Submit</Button>
+        <Input
+          type="text"
+          placeholder="Username"
+          className="w-full"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        {error && (
+          <div className="text-red-500 text-center">
+            {error}
+          </div>
+        )}
+        <Button
+          onClick={goToChat}
+          className="w-full"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Sign In"}
+        </Button>
       </div>
     </div>
   )
 }
-

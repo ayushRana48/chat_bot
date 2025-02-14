@@ -34,12 +34,4 @@ export interface StreamState<T> {
 
 export interface IntentClassification {
     reply?: (string | null)
-    plan: (partial_types.Plan | null | null)
-    action?: (string | null)
-}
-
-export interface Plan {
-    time_period?: (string | null)
-    payment_per?: (string | null)
-    time_amount?: (string | null)
 }

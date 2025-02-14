@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "baml-generate": "baml-cli generate",
-    "build1": "npm run baml-generate && tsc --build"
+    "baml-generate": "baml-cli generate"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.9",

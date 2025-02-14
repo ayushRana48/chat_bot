@@ -61,7 +61,7 @@ export default function ChatBot() {
               <div className="bg-gray-200 text-black rounded-lg p-3 max-w-[80%]">
                 <div className="flex items-center space-x-2">
                   <Bot className="h-4 w-4" />
-                  <span className="font-semibold">Bot</span>
+                  <span className="font-semibold">Jarvis</span>
                 </div>
                 <p>Thinking...</p>
                 <div className="mt-2 flex space-x-1">
