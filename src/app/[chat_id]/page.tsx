@@ -15,17 +15,14 @@ export default function ChatBot() {
 
   useEffect(() => {
     if (chatId && typeof chatId === "string") {
-      console.log("chatId", chatId)
       setChatId(chatId)
     }
   }, [chatId, setChatId])
 
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("onSubmit", input)
     e.preventDefault()
     if (input.trim()) {
-      console.log("onSubmit2", input)
       handleSubmit(e)
       if (!chatStarted) setChatStarted(true)
     }

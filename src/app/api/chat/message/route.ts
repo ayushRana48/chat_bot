@@ -22,7 +22,6 @@ resetBamlEnvVars({ OPENAI_API_KEY: process.env.OPENAI_API_KEY || "" });
     .order("created_at", { ascending: false })  // Directly query in the correct order
     .limit(limit);
 
-    console.log("messages", messages)
 
   if (error) {
     console.error("Error fetching conversation context:", error);
@@ -51,7 +50,6 @@ export async function POST(req: Request) {
     const conversationContext = await getConversationContext(chat_id);
 
     // Call BAML function to generate a response
-    console.log("conversationContext", conversationContext)
     const response = await b.NegotiationResponse(user_message, conversationContext);
     const { reply } = response;
 

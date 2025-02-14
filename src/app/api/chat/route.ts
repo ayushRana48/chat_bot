@@ -3,7 +3,6 @@ import { supabase } from "../../../supabase"
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const chat_id = request.nextUrl.searchParams.get("chat_id")
-  console.log(chat_id, 'chat_id')
   try {
     if (!chat_id) {
       return NextResponse.json({ error: "Chat ID is required" }, { status: 400 })

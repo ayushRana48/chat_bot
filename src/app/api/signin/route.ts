@@ -17,7 +17,6 @@ export async function POST(req: Request) {
       .single()
 
     if (chatError && chatError.details !== "The result contains 0 rows") {
-      console.log("chatError", chatError)
       return NextResponse.json({ error: "Error retrieving chat data", details: chatError.message }, { status: 500 })
     }
 
@@ -25,7 +24,6 @@ export async function POST(req: Request) {
       // Create new chat session
       const { error: insertError } = await supabase.from("chat").insert({ chat_id: username })
       if (insertError) {
-        console.log("insertError", insertError)
         return NextResponse.json({ error: "Failed to create new chat session", details: insertError.message }, { status: 500 })
       }
 
@@ -40,7 +38,6 @@ export async function POST(req: Request) {
       ]).select()
                                 
       if (messageError) {
-        console.log("messageError", messageError)
         return NextResponse.json({ error: "Failed to insert initial bot message", details: messageError.message }, { status: 500 })
       }
 
@@ -62,14 +59,12 @@ export async function POST(req: Request) {
       ])
 
       if (messageInsertError) {
-        console.log("messageInsertError", messageInsertError)
         return NextResponse.json({ error: "Failed to insert bot message", details: messageInsertError.message }, { status: 500 })
       }
 
       return NextResponse.json({ message: "Returning user greeted", chat_id: username })
     }
   } catch (error) {
-    console.log("error", error)
     return NextResponse.json({ error: "Internal Server Error", details: error instanceof Error ? error.message : String(error) }, { status: 500 })
   }
 }

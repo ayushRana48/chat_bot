@@ -60,7 +60,6 @@ export function useChat() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setInput("")
-    console.log("input", input)
     if (!input.trim()) return
 
     const userMessage: Message = { id: Date.now().toString(), role: "User", content: input }
@@ -80,7 +79,6 @@ export function useChat() {
       }
 
       const data = await res.json()
-      console.log("data", data)
 
       if (!data.reply) {
         throw new Error("No response received from the bot")
