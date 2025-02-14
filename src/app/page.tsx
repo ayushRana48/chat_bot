@@ -45,7 +45,7 @@ export default function MyComponent() {
         <p className="text-center text-gray-600">Enter your username to get started</p>
         <Input
           type="text"
-          placeholder="Username"
+          placeholder="Username (any string)"
           className="w-full"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
